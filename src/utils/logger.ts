@@ -6,7 +6,7 @@ const log = logger({
     target: 'pino-pretty',
     options: {
       translateTime: `"${dayjs().format()}"`,
-    }
+    },
   },
   base: {
     pid: false,

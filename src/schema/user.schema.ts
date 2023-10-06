@@ -16,8 +16,8 @@ export const createUserSchema = object({
   }).refine((data) => data.password === data.passwordConfirmation, {
     message: 'Passwords do not match',
     path: ['passwordConfirmation'],
-  })
-})
+  }),
+});
 
 // export type CreateUserInput = Omit<TypeOf<typeof createUserSchema>, "body.passwordConfirmation">;
 export type CreateUserInput = TypeOf<typeof createUserSchema>;
