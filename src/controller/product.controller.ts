@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import {
-  CreateProductInput,
   DeleteProductInput,
   ReadProductInput,
   UpdateProductInput,
@@ -13,8 +12,10 @@ import {
 } from '../service/product.service';
 import { UserDocument } from '../models/user.model';
 
+import { ProductInput } from '../models/product.model';
+
 export async function createProductHandler(
-  req: Request<{}, {}, CreateProductInput>,
+  req: Request<{}, {}, ProductInput>,
   res: Response
 ) {
   const userId = res.locals.user._id as UserDocument['_id'];
