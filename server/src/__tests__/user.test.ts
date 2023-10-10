@@ -103,18 +103,43 @@ describe('user', () => {
         };
 
         const send = jest.fn();
+        const cookie = jest.fn();
 
         const res = {
           send,
+          cookie,
         };
 
         // @ts-ignore
         await createSessionHandler(req, res);
 
+        expect(cookie).toHaveReturnedTimes(2);
+
         expect(send).toHaveBeenCalledWith({
           accessToken: expect.any(String),
           refreshToken: expect.any(String),
         });
+
+        expect(cookie).toHaveBeenCalledWith('accessToken', expect.any(String), {
+          maxAge: 900000, // 15 minutes
+          httpOnly: true,
+          domain: 'localhost',
+          path: '/',
+          sameSite: 'strict',
+          secure: false,
+        });
+        expect(cookie).toHaveBeenCalledWith(
+          'refreshToken',
+          expect.any(String),
+          {
+            maxAge: 3.154e10, // 1 year
+            httpOnly: true,
+            domain: 'localhost',
+            path: '/',
+            sameSite: 'strict',
+            secure: false,
+          }
+        );
       });
     });
   });
