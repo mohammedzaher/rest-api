@@ -1,29 +1,34 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { object, string, TypeOf } from 'zod';
+import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { object, string, TypeOf } from 'zod';
 
-export const createSessionSchema = object({
-  email: string().min(1, { message: 'Email is required' }),
-  password: string().min(1, { message: 'Password is required' }),
+const createSessionSchema = object({
+  email: string().nonempty({
+    message: 'Email is required',
+  }),
+  password: string().nonempty({
+    message: 'Password is required',
+  }),
 });
 
-type createSessionInput = TypeOf<typeof createSessionSchema>;
+type CreateSessionInput = TypeOf<typeof createSessionSchema>;
 
 function LoginPage() {
   const router = useRouter();
   const [loginError, setLoginError] = useState<string | null>(null);
+
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<createSessionInput>({
+  } = useForm<CreateSessionInput>({
     resolver: zodResolver(createSessionSchema),
   });
 
-  async function onSubmit(values: createSessionInput) {
+  async function onSubmit(values: CreateSessionInput) {
     try {
       await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/sessions`,
@@ -35,7 +40,9 @@ function LoginPage() {
       setLoginError(e.message);
     }
   }
+
   console.log({ errors });
+
   return (
     <>
       <p>{loginError}</p>
@@ -47,8 +54,7 @@ function LoginPage() {
             type="email"
             placeholder="jane.doe@example.com"
             {...register('email')}
-          ></input>
-          {/* @ts-ignore */}
+          />
           <p>{errors.email?.message}</p>
         </div>
 
@@ -57,14 +63,13 @@ function LoginPage() {
           <input
             id="password"
             type="password"
-            placeholder="********"
+            placeholder="*********"
             {...register('password')}
-          ></input>
-          {/* @ts-ignore */}
+          />
           <p>{errors.password?.message}</p>
         </div>
 
-        <button type="submit">LOGIN</button>
+        <button type="submit">SUBMIT</button>
       </form>
     </>
   );

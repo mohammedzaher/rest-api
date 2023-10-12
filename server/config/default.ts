@@ -11,4 +11,7 @@ export default {
   refreshTokenTtl: '1y',
   publicKey: fs.readFileSync('public.pem', 'utf-8'),
   privateKey: fs.readFileSync('private.pem', 'utf-8'),
+  googleClientId: process.env.GOOGLE_CLIENT_ID,
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  googleOauthRedirectUrl: 'http://localhost:1337/api/sessions/oauth/google',
 };
