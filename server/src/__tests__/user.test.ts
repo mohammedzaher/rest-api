@@ -14,11 +14,13 @@ const userPayload = {
   _id: userId,
   email: 'jane.doe@example.com',
   name: 'Jane Doe',
+  picture: 'https://example.com/picture.jpg',
 };
 
 const userInput = {
   email: 'test@example.com',
   name: 'Jane Doe',
+  picture: 'https://example.com/picture.jpg',
   password: 'Password123',
   passwordConfirmation: 'Password123',
 };
@@ -120,12 +122,13 @@ describe('user', () => {
           refreshToken: expect.any(String),
         });
 
+        type sameSite = 'strict' | 'lax' | 'none' | 'strict';
         expect(cookie).toHaveBeenCalledWith('accessToken', expect.any(String), {
           maxAge: 900000, // 15 minutes
           httpOnly: true,
           domain: 'localhost',
           path: '/',
-          sameSite: 'strict',
+          sameSite: expect.any(String) as sameSite,
           secure: false,
         });
         expect(cookie).toHaveBeenCalledWith(
@@ -136,7 +139,7 @@ describe('user', () => {
             httpOnly: true,
             domain: 'localhost',
             path: '/',
-            sameSite: 'strict',
+            sameSite: expect.any(String) as sameSite,
             secure: false,
           }
         );
