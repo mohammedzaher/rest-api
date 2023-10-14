@@ -13,8 +13,6 @@ import {
 import { signJwt } from '../utils/jwt.utils';
 import config from 'config';
 import logger from '../utils/logger';
-import jwt from 'jsonwebtoken';
-import { findAndUpdateProduct } from '../service/product.service';
 
 const accessTokenCookieOptions: CookieOptions = {
   maxAge: 900000, // 15 minutes
