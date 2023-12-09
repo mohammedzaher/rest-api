@@ -67,6 +67,7 @@ describe('product', () => {
     describe('given the user is logged in', () => {
       it('should return a 200 status and the product', async () => {
         const jwt = signJwt(userPayload);
+        console.log('jwt', jwt);
         const { body, statusCode } = await supertest(app)
           .post('/api/products')
           .set('Authorization', `Bearer ${jwt}`)
