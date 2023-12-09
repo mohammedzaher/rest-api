@@ -1,0 +1,44 @@
+name: continuous-integration workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: Build the server
+    defaults:
+      run:
+        working-directory: ./server
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+
+  test:
+    name: Test the server
+    defaults:
+      run:
+        working-directory: ./server
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn install
+      
+      - name: Test
+        run: yarn test
