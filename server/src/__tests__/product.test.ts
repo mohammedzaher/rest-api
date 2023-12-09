@@ -71,6 +71,7 @@ describe('product', () => {
           .post('/api/products')
           .set('Authorization', `Bearer ${jwt}`)
           .send(productPayload);
+        console.log('statusCode', statusCode, 'body', body);
         expect(statusCode).toBe(200);
         expect(body).toEqual({
           __v: 0,
