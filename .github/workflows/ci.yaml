@@ -40,11 +40,11 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: create private key
-        run: ssh-keygen -t rsa -b 4096 -m PEM -f private.pem
+      - name: Use private key
+        run: echo "${{ secrets.PRIVATE_KEY }}" > private.pem
 
-      - name: create public key
-        run: openssl rsa -in private.pem -pubout -outform PEM -out public.pem
+      - name: Use public key
+        run: echo "${{ secrets.PUBLIC_KEY }}" > public.pem
       
       - name: Test
         run: yarn test
